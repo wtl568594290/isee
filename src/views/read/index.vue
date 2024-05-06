@@ -10,7 +10,10 @@
       <p
         class="chapter-title"
         :style="[{ color: colorClass.title.value }]"
-        :class="{ 'status-animate': isAnimate }"
+        :class="{
+          'status-animate': isAnimate,
+          'chapter-title-first': pageIndex === 0,
+        }"
       >
         {{ chapterTitle }}
       </p>
@@ -329,7 +332,7 @@ function processAricles() {
   const container = document.querySelector('.container')
   container?.appendChild(virContent)
   const title = document.createElement('p')
-  title.className = 'chapter-title'
+  title.className = 'chapter-title chapter-title-first'
   title.innerHTML = chapterTitle.value
   virContent.appendChild(title)
   const sc: IPageContent[] = []
@@ -366,6 +369,7 @@ function processAricles() {
       }
       // 清空container,准备下个页面
       virContent.innerHTML = ''
+      title.className = 'chapter-title'
       virContent.appendChild(title)
       if (sc.length > 0) {
         const aline = line.cloneNode(true) as HTMLElement
@@ -560,6 +564,10 @@ onUnmounted(() => {
   text-align: center;
   margin: 10px 0;
 }
+:deep(.chapter-title-first) {
+  font-size: 48px;
+  font-weight: bold;
+}
 :deep(.line-static) {
   text-align: left;
   margin: 0;
@@ -567,16 +575,14 @@ onUnmounted(() => {
 
 @keyframes deformation {
   from {
-    font-weight: bold;
-    scale: 2;
+    transform: translateX(-50vw);
   }
   to {
-    font-weight: normal;
-    scale: 1;
+    transform: translateX(0);
   }
 }
 .status-animate {
-  animation: deformation 1.5s forwards;
+  animation: deformation 0.5s forwards;
 }
 
 .dirs {
