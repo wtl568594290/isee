@@ -35,8 +35,12 @@
   electronLanguages: ['en', 'zh-CN'],
   extraFiles: [],
   extraResources: [
-    'prisma/**/*.db',
+    'prisma/**/*.prisma',
+    'prisma/migrations/**/*',
     'node_modules/.prisma/**/*',
     'node_modules/@prisma/client/**/*',
   ],
+  // afterPack调用位置是在electron-builder.json5文件的目录下
+  // 调用时间是生成了win-unpacked文件夹之后，打包成exe之前
+  afterPack: './afterPack.js',
 }

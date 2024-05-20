@@ -125,6 +125,5 @@ app.on('activate', () => {
 
 app.whenReady().then(createWindow)
 
-// 注册软件，首次注册时会清空数据库
 register()
 IPC()
